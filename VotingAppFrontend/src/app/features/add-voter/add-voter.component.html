@@ -1,0 +1,19 @@
+<div class="card h-25 w-25 popup" style="display: contents;">
+    <div class="card-header">
+        <h3 class="card-title">Add Voter</h3>
+        <button type="button" class="btn btn-dark btnclose" (click)="onClose()">X</button>
+    </div>
+    <div class="card-body">
+        <form #form="ngForm" (ngSubmit)="onFormSubmit()">
+            <div class="mt-3">
+                <input type="text" class="form-control" placeholder="Name" name="voterName" required [(ngModel)]="name">
+                <div *ngIf="form.submitted && form.controls['voterName'].errors?.['required']">
+                    <small class="text-danger">Please enter name.</small>
+                </div>
+            </div>
+            <div class="mt-3">
+                <button type="submit" class="btn btn-dark">Add</button>
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,15 @@
+.popup {
+    margin-left: 40%;
+    display: flex;
+    flex-direction: column;
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.btnclose {
+    margin-left: auto;
+}

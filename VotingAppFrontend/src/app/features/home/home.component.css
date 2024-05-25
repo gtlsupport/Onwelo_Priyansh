@@ -1,0 +1,7 @@
+.addData{
+    float: right;
+}
+.table-fixed-height {
+    height: 600px; /* Set the desired height */
+    overflow-y: auto; /* Enable vertical scrolling */
+}

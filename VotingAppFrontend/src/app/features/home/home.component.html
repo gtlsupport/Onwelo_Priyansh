@@ -1,0 +1,105 @@
+<div class="container">
+    <h1 class="mt-3">Voting app</h1>
+
+    <div class="row row-cols-1 row-cols-md-2 g-5 mt-1 d-flex align-items-center justify-content-center">
+        <div class="col">
+          <div class="card table-fixed-height" style="border: none;">
+            <table class="table table-bordered mt-3">
+                <thead>
+                    <tr>
+                        <th colspan="2" style="text-align: center;">Voters <i class="bi bi-plus-circle" (click)="openAddVoter()" style="float: right;"></i></th>
+                    </tr>
+                    <tr style="text-align: center;">
+                        <th>Name</th>
+                        <th>Has voted</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let voter of voters$ | async as voters" style="text-align: center;">
+                        <td>{{voter.name}}</td>
+                        <td>{{transformValue(voter.hasVoted)}}</td>
+                    </tr>
+                </tbody>
+            </table>
+          </div>
+          <nav aria-label="Page navigation example">
+            <ul class="pagination">
+                <li class="page-item"><a class="page-link" (click)="getPreviousPageVoter()">Previous</a></li>
+                <li class="page-item" *ngFor="let item of listVoter;let index = index">
+                    <a class="page-link" (click)="getPageVoter(index + 1)">{{index + 1}}</a>
+                </li>
+                <li class="page-item"><a class="page-link" (click)="getNextPageVoter()">Next</a></li>
+            </ul>
+        </nav>
+        </div>
+        <div class="col">
+          <div class="card table-fixed-height" style="border: none;">
+            <table class="table table-bordered mt-3 ">
+                <thead>
+                    <tr>
+                        <th colspan="2" style="text-align: center;">Candidates <i class="bi bi-plus-circle" (click)="openAddCandidate()" style="float: right;"></i></th>
+                    </tr>
+                    <tr style="text-align: center;">
+                        <th>Name</th>
+                        <th>Votes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let candidate of candidates$ | async as candidates " style="text-align: center;">
+                        <td>{{candidate.name}}</td>
+                        <td>{{candidate.votesCount}}</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            
+          </div>
+        <nav aria-label="Page navigation example">
+            <ul class="pagination">
+                <li class="page-item"><a class="page-link" (click)="getPreviousPageCandidate()">Previous</a></li>
+                <li class="page-item" *ngFor="let item of listCandidate;let index = index">
+                    <a class="page-link" (click)="getPageCandidate(index + 1)">{{index + 1}}</a>
+                </li>
+                <li class="page-item"><a class="page-link" (click)="getNextPageCandidate()">Next</a></li>
+            </ul>
+        </nav>
+        </div>
+    </div>
+
+    <hr/>
+    <h1>Vote!</h1>
+    <div class="">
+        <form class="row row-cols-4" #form="ngForm" (ngSubmit)="onVoteSubmit()">
+            <div>
+                <p>I am</p>
+                <select class="form-control mt-2" name="voters" id="voters" [(ngModel)]="voterId" required>
+                    <option *ngFor="let voter of nonVotedVoters" [ngValue]="voter.id">{{voter.name}}</option>
+                </select>
+                <div *ngIf="form.submitted && form.controls['voters'].errors?.['required']">
+            <small class="text-danger">Please select who you are voting as.</small>
+        </div>
+            </div>
+            <div>
+                <p>I vote for</p>
+                <select class="form-control mt-2" name="candidates" id="candidates" [(ngModel)]="candidateId" required>
+                    <option *ngFor="let candidate of candidates" [ngValue]="candidate.id">{{candidate.name}}</option>
+                </select>
+                <div *ngIf="form.submitted && form.controls['candidates'].errors?.['required']">
+                    <small class="text-danger">Please select who you are voting for.</small>
+                </div>
+            </div>
+            <div> <p></p>
+                <button type="submit" class="btn btn-secondary" style="margin-top: 20px;">Submit</button>
+            </div>
+        </form>        
+    </div>  
+</div>
+
+
+<div class="images-container-model" [ngClass]="{'d-block': addCandidate, 'd-none': !addCandidate}">
+    <app-add-candidate></app-add-candidate>
+</div>
+
+<div class="images-container-model" [ngClass]="{'d-block': addVoter, 'd-none': !addVoter}">
+    <app-add-voter></app-add-voter>
+</div>
