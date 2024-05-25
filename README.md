@@ -1,2 +1,0 @@
-# Onwelo
-procurement process 
